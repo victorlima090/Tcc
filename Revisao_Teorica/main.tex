@@ -1,0 +1,63 @@
+\frenchspacing 
+\chapter{Revisão Teórica}
+A proposta deste trabalho envolve conceitos como arquitetura de Rede, Redes Definidas por Software(SDN), controladores SDN , protocolo OpenFlow, Mininet. Este capítulo apresenta estes conceitos.
+
+\section{Arquitetura Atual da Internet}
+A Internet é a conexão de diversas redes de computadores entre si, com o objetivo de interligar computadores e outros dispositivos. Ela é composta por links de comunicação e comutadores de pacotes. Um link de comunicação é o meio físico através as informações serão enviadas, como por exemplo: cabo coaxial, fibra óptica, ondas de rádio entre outros. Um comutator, também chamado de \textit{nó}, pode ser um roteador ou um switch, ambos são dispositivos responsáveis por encaminhar os pacotes de dados na rede até que os mesmo cheguem em seus respectivos destinos. As máquinas de origem e destino dos pacotes de dados são geralmente chamados de \textbf(host) (computadores, tablets, smartphones, etc). Quando um host deseja mandar informação para outro , ele separa essa informação em pequenos pacotes e os manda através da rede \cite{topdownapp}.
+
+Um protocolo de rede é um conjunto de regras utilizado para padronizar como as informações são enviadas e processadas por cada dispositivo. Todas as rede que fazem parte da Internet implementam o protocolo IP. Nele, é atribuído a cada host um endereço IP, um rótulo numérico, que identifica a máquina na rede. Dessa forma, um host consegue enviar ou requisitar dados a outro host se souber o seu endereço IP.
+
+Uma rede IP é uma rede composta por uma pilha de camadas, na qual cada camada fornece serviços para a cada superior. Dessa forma, cada camada possui sua função e pode implementar seus respectivos protocolos\cite{topdownapp}. As camadas são:
+
+\begin{itemize}
+\item \textbf{Camada de aplicação}: A aplicações dos host se encontram nessa camada, como jogos, navegadores, gerenciadores de email, etc. Diferentes protocolos podem ser utilizados, de acordo com o objetivo de cada programa. Por exemplo: protocolo HTTP prove a requisição e transferência de documentos Web, enquanto que o protocolo FTP provê a transferência de arquivos entre dois computadores.
+\item \textbf{Camada de transporte} :  A camada de transporte é responsável por transportar os pacotes vindo da camada de aplicação. Existem dois protocolos neste camada : o TCP e o UDP. O TCP garante um controle de fluxo de pacotes, além de garantir que todos os pacotes cheguem no destinatário, sempre consultando o destino final para saber se ambos podem estabelecer uma conexão. Já o protocolo UDP, não garante que todos os pacotes cheguem no destino, nem possui um controle do fluxo de pacotes, além disso, ele não verifica se o destinatário aceita estabelecer uma conexão e apenas manda todos os pacotes direto pra ele
+\item \textbf{Camada de Rede}: Esta camada recebe os dados da camada de transporte e agrega a eles o protocolo IP. Existe somente um protocolo IP e todo dispositivo que possuir uma camada de rede deve rodar esse protocolo. Além disso, nesta camada também são aplicados protocolos de roteamento, indicando qual o caminho que os pacotes devem seguir na própria rede.
+\item \textbf{Camada de enlace de dados}: Esta camada é responsável por transmitir os pacotes de dados recebidos pela camada de rede de um nó para outro, dependendo do tipo de comunicação entre eles. Cada topologia da rede decidirá como o pacote irá trafegar por ela.
+\item \textbf{Camada física} : Enquanto a camada anterior se preucupava com o pacote de dados, a camada física é responsável pelo envio individual dos bits, respeitando as característica de cada tipo de link de comunicação.
+\end{itemize}
+
+O nó de uma rede, ao receber um pacote, analisa o seu endereço IP e o reencaminha para outro nó ou para o host de destino. Essa tomada de decisão é realizada através da consulta de uma tabela, chamada tabela de encaminhamento. Desta forma, as funcionalidades do comutator podem ser separadas em dois planos: plano de dados e plano de controle. O plano de controle é responsável pela construção da tabela de encaminhamento, enquanto que o plano de dados é o responsável pelo recebimento e envio de pacotes de dados, além de consultar a tabela de encaminhamento. Para melhorar o desempenho, ambos os planos são implementados via hardware.
+
+\section{Redes Definidas por software}
+
+Uma Rede Definida por Software (SDN), é uma rede onde a tabela de encaminhamento é construída através de software. A construção da tabela de encaminhamento se torna tarefa de um dispositivo central chamado da controlador, que é conectado a todos os nós da rede. Uma rede pode ter mais de um controlador, dependendo do seu tamanho e necessidade.
+
+Dessa forma, a consulta a tabela e transmissão de pacotes continua sendo eficiente pois são implementadas via hardware. Esta arquitetura tem ganhado destaque na comunidade acadêmica pois possibilita a implementação de novas funcionalidades, além daquelas oferecidas pelo hardware do fabricante. Além disso, permite que novas funcionalidades sejam testadas na rede sem atrapalhar o fluxo de produção.
+
+\section{OpenFlow}
+
+O protocolo Openflow é o protocolo responsável pela comunicação entre o controlador SDN e um comutator de rede, como por exemplo, um switch. Para que um switch possa utilizar esse protocolo, ele deve conter determinadas estruturas como : tabela de fluxos, tabela de grupo (?) e um canal Openflow que permita a comunicação entre o switch e o controlador SDN. Pode existir mais de uma tabela de fluxos, e fluxos são adicionados, deletados e atualizados a qualquer momento pelo controlador, ao inicializar uma rede ou devido a chegada de um pacote. Quando um pacote chega ao switch, ele é comparado a tabela de fluxos, de acordo com a ordem de prioridade preestabelecida . A cada fluxo são associadas ações a serem aplicadas sobre o pacote, incluindo encaminhá-lo a uma tabela de grupo, onde ações adicionais são especificadas. Dependendo da configuração estabelecida pelo controlador, quando um pacote não se encaixa em nenhum fluxo de uma tabela, ele pode ser enviado ao controlador, descartado ou encaminhando para outra tabela de fluxos.\cite{Openflow}
+
+\section{Controlador POX}
+
+Como visto anteriormente, o dispositivo central de uma rede SDN é o controlador. Um dos primeiros controladores a serem desenvolvidos junto com protocolo Openflow foi o controlador NOX. Utilizando lingaguem C++ e Python, ele ganhou destaque devido a sua eficiência, e devido a sua interface possuir capacidade de adicionar novas funcionalidades ao controlador.
+
+O controlador POX é um controlador baseado no controlador NOX. O POX é desenvolvido apenas utilizando linguagem Python. Apesar desse linguagem oferecer uma plataforma melhor e mais simples para o desenvolvimento de novas funcionalidades, ela também faz com que o POX possua um desempenho inferior ao NOX. Dessa forma, ele é utilizado em contextos onde a demanda por desempenho não seja alta.
+
+\section{Mininet}
+
+Mininet é um emulador de rede, capaz de emular uma rede virtual com links, swtiches, roteadores e controladores. É um software gratuito e Ope Source. Além disso, oferece diversas API em Python , permite que vários desenvolvedores trabalhem na mesma topologia, e implementa o protocolo OpenFlow
+
+Portanto, o mininet se mostra como uma excelente plataforma para teste para o funcionamento de uma rede SDN, uma vez que consegue emular uma rede com até 4096 hosts e swtiches. Dessa forma, esse software foi escolhido para servir de base para a implementação de uma rede SDN e como ambiente de teste para geração de tráfego de dados, e como a aplicação a ser feita se comportará em uma rede.\cite{Mininet}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

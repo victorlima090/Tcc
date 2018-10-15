@@ -1,0 +1,9 @@
+\chapter{ Metodologia }
+
+Este trabalho tem como proposta a criação de uma aplicação, no controlador POX, de monitoramento e classificação de fluxos de dados numa rede SDN. Esta aplicação será baseada em uma aplicação original já existente que monitora e classifica os fluxos de uma placa de rede de um computador, utilizando sistema operacional Linux. Ela será testada inicialmente em um ambiente emulado, utilizando o programa Mininet, que consegue a estrutura e o funcionamento de uma rede. A aplicação original consegue classificar o fluxo em três tipos: streaming de vídeo do Youtube, streaming de vídeo da Netflix e outros tipos de dados. A mesma classificação será mantida na nova aplicação.
+
+Inicialmente, será feito uma análise de como criar e integrar uma aplicação ao controlador POX. Além disso, será analisado o código da aplicação original para se conhecer a arquitetura do programa. A nova aplicação será feita utilizando a mesma linguagem de programação da original: linguagem python.
+
+Para testar e validar a nova aplicação serão realizados testes iguais em ambas as aplicações: a nova e a original, para verificar se o comportamento das duas é o mesmo diante dos ambientes gerados pela simulação. Serão feitos teste para verificar se a aplicação consegue monitorar qualquer tipo de fluxo, e se consegue classificar o fluxo nas três categorias mencionadas anteriormente.
+
+Além disso, será feita uma coleta de dados do fluxo da rede armazenando-os em um banco de dados SQL. Essa banco servirá tanto para comparação entre os dados coletados da nova aplicação e da aplicação original, além de ser utilizado pelas aplicações no contexto em que a rede sofre alguma falha e precisa ser restaurada.
